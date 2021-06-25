@@ -12,13 +12,7 @@ IPFS_PATH ?= $(HOME)/.ipfs
 IPFS_VERSION ?= $(lastword $(shell $(GOCC) list -m github.com/ipfs/go-ipfs))
 
 # make reproducible
-ifneq ($(findstring /,$(IPFS_VERSION)),)
-# Locally built go-ipfs
-GOFLAGS += -asmflags=all=-trimpath="$(GOPATH)" -gcflags=all=-trimpath="$(GOPATH)"
-else
-# Remote version of go-ipfs (e.g. via `go get -trimpath` or official distribution)
-GOFLAGS += -trimpath
-endif
+GOFLAGS += -trimpath -ldflags="-s -w -buildid="
 
 .PHONY: install build
 
