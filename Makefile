@@ -14,6 +14,9 @@ IPFS_VERSION ?= $(lastword $(shell $(GOCC) list -m github.com/ipfs/go-ipfs))
 # make reproducible
 GOFLAGS += -trimpath -ldflags="-s -w -buildid="
 
+# match Go's default GOPATH behaviour
+export GOPATH ?= $(shell $(GOCC) env GOPATH)
+
 .PHONY: install build
 
 go.mod: FORCE
